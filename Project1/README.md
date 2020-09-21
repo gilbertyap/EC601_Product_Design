@@ -9,8 +9,10 @@
 
 * **Perl**: For running the .rttm evaluation script
 
+* [Microsoft Visual Studios Community 2019](https://visualstudio.microsoft.com/downloads/) - Requires that MSVC (and Windows 10 SDK?) is installed. This is for installing webrtcvad for Python.
+
 ## Libraries Used
-(Sourced libraries are in the SharedResources folder)
+(Please `git clone https://github.com/josepatino/pyBK.git` into the SharedResources folder)
 
 pyBK: https://github.com/josepatino/pyBK
 
@@ -24,6 +26,12 @@ pyBK: https://github.com/josepatino/pyBK
   Year = {2020},
 }
 ```
+
+## Installation:
+* `git clone git@github.com:gilbertyap/EC601_Product_Design.git`
+* `cd EC601_Product_Design/Project1`
+* `pip install -r requirements.txt` - This will install all Python requirements.
+* `git clone https://github.com/josepatino/pyBK.git` into the SharedResources folder. This will allow the usage of the pyBK software library files.
 
 ## Video Sample
 

@@ -1,5 +1,5 @@
-virtualenv
 google-api-python-client
 google-cloud-language
+google-cloud-storage
 tweepy
 pyqt5

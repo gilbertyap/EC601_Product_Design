@@ -20,12 +20,12 @@ Input  - None
 Output - client, errors
 ''' 
 def init_google_nlp():
-    cleint = None
+    client = None
     errors = []
     try:
         client = language.LanguageServiceClient()
     except :
-        error.append(initi_google_nlp.__name__ + ' : Error in initializing the Google Cloud SDK client.')
+        errors.append(init_google_nlp.__name__ + ' : Error in initializing the Google Cloud SDK client.')
     
     return (client, errors)
 

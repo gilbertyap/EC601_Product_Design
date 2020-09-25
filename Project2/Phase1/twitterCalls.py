@@ -53,7 +53,7 @@ def getTweet(api, id):
     return (tweetObj,errors)
 
 '''
-Gets the 100 most popular tweets from a search
+Gets the most popular tweets from a search
 Input   - username : string
 Output  - list of tweet_objects
 '''
@@ -65,10 +65,10 @@ def doSearch(api, query, count=100, result_type='mixed'):
         # Only get English results since 
         searchResults = api.search(query, lang='en', count=count, result_type=result_type)
     except tweepy.TweepError as err:
-        errors.append(getUserProfile.__name__ + ': ' + str(err))
+        errors.append(doSearch.__name__ + ': ' + str(err))
 
     if len(searchResults) == 0:
-        errors.append('Could not get results for search term \"'+ query +'\"')
+        errors.append(doSearch.__name__ + ': ' + 'Could not get results for search term \"'+ query +'\"')
     else:
         statusList = []
         for result in searchResults:
@@ -124,6 +124,7 @@ def getTrendingLocations(api):
         return (None, errors)
 
     if locationsJsonObj is not None:
+        locationsList = []
         for dict in locationsJsonObj:
             if dict['country'] != None:
                 country = dict['country']
@@ -208,7 +209,7 @@ if __name__ == '__main__':
     
     for tweet in userTimelineList:
         print('created_at: ' + str(tweet.created_at))
-        print('text: ' + str(tweet.full_text ))
+        print('text: ' + str(tweet.text ))
         print('source: ' + str(tweet.source))
         print('in_reply_to_user_id: ' + str(tweet.in_reply_to_user_id))
         print('is_quote_status: ' + str(tweet.is_quote_status))
@@ -231,6 +232,13 @@ if __name__ == '__main__':
     if trendingDict is None:
         print_errors(errors)
         sys.exit(1)
- 
+
+    print('********Performing Twitter search...********')
+    (list, errors) = doSearch(api, query='#BostonUniversity', count=100, result_type='popular')
+    if list is None:
+        print_errors(errors)
+        sys.exit(1)
+
+
     print('********Test complete********')
     sys.exit(0)

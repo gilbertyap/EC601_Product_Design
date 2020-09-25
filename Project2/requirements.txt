@@ -1,4 +1,5 @@
 virtualenv
+google-api-python-client
 google-cloud-language
 tweepy
 pyqt5

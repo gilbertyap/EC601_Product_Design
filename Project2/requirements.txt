@@ -1,0 +1,4 @@
+virtualenv
+google-cloud-language
+tweepy
+pyqt5

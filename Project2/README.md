@@ -20,6 +20,9 @@ Phase 1 was an opportunity for students to get famililar with using third-party 
 
 ## How to run
 
+### Optional
+There are built-in tests in `twitterCalls.py` and `nlpCalls.py`. Running either `python twitterCalls.py` or `python nlpCalls.py` will perform a test that calls every function within the file. This test is useful for ensuring that all functions used within `analyzeTwitter.py` are working properly.
+
 ### Phase 1
 1. Users must first put their Twitter API into the settings.ini file. Users may also customize the `numSearchResults` between 1 and 200 to increase or decrease the number of tweets per hashtag exaimined for sentiment analysis.
 2. Open an Admin command line console and run the demo with `python analyzeTwitter.py`.

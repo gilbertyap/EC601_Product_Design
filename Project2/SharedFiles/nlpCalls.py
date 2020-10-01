@@ -11,11 +11,10 @@ from google.cloud.language import enums
 from google.cloud.language import types
 
 import sys
-
-from helper import print_errors
+import helper
 
 '''
-Put a comment here
+Initializes the Google NLP API
 Input  - None
 Output - client, errors
 ''' 
@@ -31,9 +30,9 @@ def init_google_nlp():
 
 
 '''
-Put a comment here
+Analyizes a string of text using the Google NLP API
 Input  - text: string
-Output - sentimentDict, errors
+Output - sentimentDict:dictionary, errors:list of string
 ''' 
 def analyze_text_sentiment(client, text=''):
     sentimentDict = {}
@@ -57,17 +56,17 @@ def analyze_text_sentiment(client, text=''):
 if __name__ == '__main__':
     (client, errors) = init_google_nlp()
     if client is None:
-        print_errors(errors)
+        helper.print_errors(errors)
         sys.exit(1)
     
     # The text to analyze
     text = u'Hello, world!'
     (sentimentDict,errors) = analyze_text_sentiment(text)
     if len(sentimentDict) == 0:
-        print_errors(errors)
+        helper.print_errors(errors)
         sys.exit(1)
 
-    print('Text: {}'.format(text))
-    print('Sentiment: {}, {}'.format(sentimentDict['score'], sentimentDict['magnitude']))
+    helper.console_print('Text: {}'.format(text))
+    helper.console_print('Sentiment: {}, {}'.format(sentimentDict['score'], sentimentDict['magnitude']))
     
     sys.exit(0)

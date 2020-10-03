@@ -3,3 +3,5 @@ google-cloud-language
 google-cloud-storage
 tweepy
 pyqt5
+pyside2
+matplotlib

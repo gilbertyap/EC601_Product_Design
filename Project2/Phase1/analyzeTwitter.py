@@ -6,11 +6,15 @@
 #---------------------------------------------
 
 import configparser, sys, time
+sys.path.insert(1, '..\\SharedFiles\\')
 import nlpCalls, twitterCalls, helper
 
-SETTINGS_FILE = 'settings.ini'
+SETTINGS_FILE = '..\\SharedFiles\\settings.ini'
 
 '''
+Initializes both the Twitter and Google Cloud APIs
+Input  - twitter_api_key, twitter_api_secret_key: string
+Output - twitterApi:tweepy.API, googleClient: google.cloud.language.LanguageServiceClient,errors:list of string
 '''
 def init_apis(twitter_api_key, twitter_api_secret_key):
     errors = []
@@ -27,9 +31,11 @@ def init_apis(twitter_api_key, twitter_api_secret_key):
     return(twitterApi, googleClient, errors)
 
 '''
+Gets a list of tweets of most popular tweets from a query and also saves the most retweeted tweet that matches that query
+Input  - twitterApi:tweepy.API, query: string, numSearchResults:int
+Output - topTrendTweetList:list of tweepy.Status, topRtTweet:tweepy.Status, errors:list of string
 '''
 def getTweetsFromQuery(twitterApi, query, numSearchResults):
-    # Perform a Twitter search against the top hastag query
     topTrendTweetList = None
     topRtTweet = None
     errors = []
@@ -55,6 +61,9 @@ def getTweetsFromQuery(twitterApi, query, numSearchResults):
     return (topTrendTweetList, topRtTweet, errors)
 
 '''
+Uses the Google Cloud NLP API to analyze a list of strings
+Input  - textList: list of string
+Output - listScore:float, listMagnitude:float
 '''
 def analyzeTextList(textList):
     # Go through the textList and generate a score and magnitude for the entire list
@@ -64,7 +73,7 @@ def analyzeTextList(textList):
         (sentimentDict,errors) = nlpCalls.analyze_text_sentiment(googleClient, text)
 
         if len(sentimentDict) == 0:
-            print('Could not generate sentiment for ' + text)
+            helper.console_print('Could not generate sentiment for ' + text)
             helper.print_errors(errors)
             continue
         else:
@@ -82,7 +91,7 @@ if __name__ == '__main__':
     # Read the SETTINGS_FILE
     settings = configparser.ConfigParser()
     settings.read(SETTINGS_FILE)
-    numSearchResults  = int(settings['SEARCH']['numSearchResults'])
+    numSearchResults  = 50
 
     # Initialize APIs
     helper.print_with_stars('Initializing APIs')
@@ -90,6 +99,7 @@ if __name__ == '__main__':
     
     if(len(errors) != 0):
         helper.print_errors(errors)
+        helper.console_print('Please check that your keys are added into the \'settings.ini\' file.')
         sys.exit(1)
 
     # Get the top trends in United States
@@ -112,10 +122,10 @@ if __name__ == '__main__':
                 if trend['tweet_volume'] != None:
                     topTweetVolume = trend['tweet_volume']
 
-    print('Top trending hastag is: ' + topTrendName +'\n')
+    helper.console_print('Top trending hastag is: ' + topTrendName +'\n')
 
     helper.print_with_stars('Analyzing popular tweets in ' + topTrendName)
-    print('Processing tweets...')
+    helper.console_print('Processing tweets...')
 
     (trendList, topRtTweet, errors) = getTweetsFromQuery(twitterApi, topTrendName, numSearchResults)
     if trendList is None:
@@ -123,23 +133,23 @@ if __name__ == '__main__':
         sys.exit(1)
 
     # Go through the trendList and generate a score and magnitude for the entire list
-    print('Processing may take a minute or two...\n')
+    helper.console_print('Processing may take a minute or two...\n')
     (listScore, listMagnitude) = analyzeTextList(trendList)
 
     # Print out information 
     helper.print_with_stars('Analysis complete')
-    print('Top trending #hashtag in USA: ' + str(topTrendName))
-    print('Sentiment of '  + str(topTrendName) +': score=' + str(listScore) + ', magnitude=' + str(listMagnitude))
-    print('Average Sentiment of '  + str(topTrendName) +': score=' + str(listScore/numSearchResults) + ', magnitude=' + str(listMagnitude/numSearchResults))
-    print("Most retweeted message with {} is by user {} with {} retweets. Text: {}".format(str(topTrendName), topRtTweet.user.screen_name, topRtTweet.retweet_count, topRtTweet.full_text))
-    print()
+    helper.console_print('Top trending #hashtag in USA: ' + str(topTrendName))
+    helper.console_print('Sentiment of '  + str(topTrendName) +': score=' + str(listScore) + ', magnitude=' + str(listMagnitude))
+    helper.console_print('Average Sentiment of '  + str(topTrendName) +': score=' + str(listScore/numSearchResults) + ', magnitude=' + str(listMagnitude/numSearchResults))
+    helper.console_print("Most retweeted message with {} is by user {} with {} retweets. Text: {}".format(str(topTrendName), topRtTweet.user.screen_name, topRtTweet.retweet_count, topRtTweet.full_text))
+    helper.console_print()
 
-    # print('Execution time was ' + str(time.time() - start_time) + ' seconds.')
-    # print()
+    # helper.console_print('Execution time was ' + str(time.time() - start_time) + ' seconds.')
+    # helper.console_print()
 
     # Generate a list of sentiment score averages for the trending topics
     helper.print_with_stars('Analyzing sentiment scores of other trending hashtags...')
-    print('This will take several minutes...')
+    helper.console_print('This will take several minutes...')
     sentimentEvaluationList = []
     for trend in trendingDict['trends']:
         if (trend['tweet_volume'] is not None):
@@ -156,7 +166,7 @@ if __name__ == '__main__':
 
     helper.print_with_stars('Other trending hastags and their scores')
     for (trendName, trendScore, trendMagnitude) in sentimentEvaluationList:
-        print('Name {}, Score {}, Magnitude {}'.format(str(trendName), str(trendScore), str(trendMagnitude)))
+        helper.console_print('Name {}, Score {}, Magnitude {}'.format(str(trendName), str(trendScore), str(trendMagnitude)))
 
-    print()
+    helper.console_print()
     sys.exit(0)

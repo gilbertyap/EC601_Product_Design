@@ -9,10 +9,13 @@
 * `cd ./EC601_Product_Design/SharedResources/pyannote-audio/`, `git checkout develop`, then `git install .`. This will install `pyannote-audio` into Python's packages.
 * `cd ../../EC601_Product_Design/Project3/`
 * `pip install -r requirements.txt` - This will install almost all Python requirements.
-* Install [PyTorch](https://pytorch.org/). For Linux users using `pip`, you can use `pip install torch torchvision`.
+* Install [PyTorch](https://pytorch.org/).
+
+## Example Files
+* `Sample_Video.m4v`
+* `reference_scores.txt`
 
 ## Citations
-
 **pyannote-audio**
 ```
 @inproceedings{Bredin2020,
@@ -63,3 +66,4 @@ The reason that I chose the `VoxConverse` dataset was because it provided the si
 ### Issues
 
 * For some reason, the performance of the pre-trained models in Windows was significantly slower than in Linux. I am not sure if this has to do with how PyTorch is installed differently in Windows than it is in Linux.
+* I have noticed some issues with installing PyTorch as of October 8th, 2020. I was able to install version 1.6.0 sometime before this but lately, running `pip install torch torchvision` or even the longer command `pip install torch==1.6.0+cpu torchvision==0.7.0+cpu -f https://download.pytorch.org/whl/torch_stable.html` seems to always return an error now. Not sure if this is an issue with the hosting of PyTorch on PyPi or not.

@@ -56,7 +56,7 @@ if __name__ == "__main__":
         tempRttmFileList.remove('donotdelete')
     finalRttmFileList = []
     for file in tempRttmFileList:
-        finalRttmFileList.append(os.path.abspath(refRttmPath)+'/'+file)
+        finalRttmFileList.append(os.path.abspath(genRttmPath)+'/'+file)
     with open('score.scp', 'w') as f:
         for line in finalRttmFileList:
             f.write(line+'\n')
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     tempRttmFileList = os.listdir(refRttmPath)
     finalRttmFileList = []
     for file in tempRttmFileList:
-        finalRttmFileList.append(os.path.abspath(genRttmPath)+'/'+file)
+        finalRttmFileList.append(os.path.abspath(refRttmPath)+'/'+file)
     with open('reference.scp', 'w') as f:
         for line in finalRttmFileList:
             f.write(line+'\n')

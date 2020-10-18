@@ -1,0 +1,4 @@
+Please install the models from the following Google Drive link:
+https://drive.google.com/drive/folders/1GV_74JOU5_g-qxmNsXYs0QFEE4eiN2ro?usp=sharing
+
+Place all individual folders in this folder

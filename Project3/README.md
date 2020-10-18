@@ -80,12 +80,12 @@ If I were to run this training again, I would definitely use Boston University's
 
 | Filename | Base DER | Fine DER |
 |-----|-----|-----|
-| abjxc | 4.46 ||
-| afjiv | 22.96 ||
-| ahnss | 18.54 ||
-| aisvi | 21.03 ||
-| akthc | 23.41 ||
-| OVERALL | 19.45 ||
+| abjxc | 4.44 | 0.75 |
+| afjiv | 22.98 | 77.73 |
+| ahnss | 16.25 | 57.61 |
+| aisvi | 20.22 | 55.90 |
+| akthc | 22.63 | 22.14 |
+| OVERALL | 17.98 | 53.80 |
 
 ### Issues
 

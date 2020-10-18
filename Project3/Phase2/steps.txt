@@ -1,0 +1,70 @@
+echo These are the command line steps I followed to train pyannot-audio
+
+echo SET THE DATABASE LOCATION
+export PYANNOTE_DATABASE_CONFIG=/home/gilbertyap/Documents/database.yml
+
+echo FOR SAD
+export EXP_DIR=finetune/sad
+pyannote-audio sad train --gpu --pretrained=sad_dihard --subset=train --to=10 --parallel=4 ${EXP_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+export TRN_DIR=${EXP_DIR}/train/VoxConverse.SpeakerDiarization.voxconverse.train
+pyannote-audio sad validate --gpu --subset=development --from=1 --to=10 --every=1 ${TRN_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+export VAL_DIR=${TRN_DIR}/validate_detection_fscore/VoxConverse.SpeakerDiarization.voxconverse.development
+pyannote-audio sad apply --gpu --subset=development ${VAL_DIR} VoxConverse.SpeakerDiarization.voxconverse
+pyannote-audio sad apply --gpu --subset=test ${VAL_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+echo FOR SCD
+export EXP_DIR=finetune/scd
+pyannote-audio scd train --gpu --pretrained=scd_dihard --subset=train --to=10 --parallel=4 ${EXP_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+export TRN_DIR=${EXP_DIR}/train/VoxConverse.SpeakerDiarization.voxconverse.train
+pyannote-audio scd validate --gpu --subset=development --from=1 --to=10 --every=1 ${TRN_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+export VAL_DIR=${TRN_DIR}/validate_segmentation_fscore/VoxConverse.SpeakerDiarization.voxconverse.development
+pyannote-audio scd apply --gpu --subset=development ${VAL_DIR} VoxConverse.SpeakerDiarization.voxconverse
+pyannote-audio scd apply --gpu --subset=test ${VAL_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+
+echo FOR OVL
+export EXP_DIR=finetune/ovl
+pyannote-audio ovl train --gpu --pretrained=ovl_dihard --subset=train --to=10 --parallel=4 ${EXP_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+export TRN_DIR=${EXP_DIR}/train/VoxConverse.SpeakerDiarization.voxconverse.train
+pyannote-audio ovl validate --gpu --subset=development --from=1 --to=10 --every=1 ${TRN_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+export VAL_DIR=${TRN_DIR}/validate_detection_fscore/VoxConverse.SpeakerDiarization.voxconverse.development
+pyannote-audio ovl apply --gpu --subset=development ${VAL_DIR} VoxConverse.SpeakerDiarization.voxconverse
+pyannote-audio ovl apply --gpu --subset=test ${VAL_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+
+
+echo FOR EMB - Tried 10, didn't work on validate
+export EXP_DIR=finetune/emb
+pyannote-audio emb train --gpu --pretrained=emb_voxceleb --subset=train --to=10 --parallel=4 ${EXP_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+echo Should have been able to use these but couldnt get fine-tuning working
+export TRN_DIR=${EXP_DIR}/train/VoxConverse.SpeakerDiarization.voxconverse.train
+pyannote-audio emb validate --gpu --subset=development --from=1 --to=10 --every=1 ${TRN_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+export VAL_DIR=${TRN_DIR}/validate_diarization_fscore/VoxConverse.SpeakerDiarization.voxconverse.test
+pyannote-audio emb apply --gpu --step=0.1 --subset=test ${VAL_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+
+
+echo For EMB, just using the pre-trained emb model for the pipeline
+export EXP_DIR=finetune
+pyannote-audio emb apply --gpu --step=0.1 --pretrained=emb --subset=development ${EXP_DIR} VoxConverse.SpeakerDiarization.voxconverse
+pyannote-audio emb apply --gpu --step=0.1 --pretrained=emb --subset=test ${EXP_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+
+echo For pipeline
+export EXP_DIR=finetune/
+pyannote-pipeline train --subset=development --iterations=10 ${EXP_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+TRN_DIR=${EXP_DIR}/train/VoxConverse.SpeakerDiarization.voxconverse.development
+pyannote-pipeline apply --subset=test ${TRN_DIR} VoxConverse.SpeakerDiarization.voxconverse
+
+echo There are two options: one that includes overlap and a collar of 0ms, or one that removes overlap and adds a color of 250 ms
+pyannote-metrics diarization VoxConverse.SpeakerDiarization.voxconverse ${TRN_DIR}/apply/latest/VoxConverse.SpeakerDiarization.voxconverse.test.rttm
+pyannote-metrics diarization --collar=0.5 --skip-overlap VoxConverse.SpeakerDiarization.voxconverse ${TRN_DIR}/apply/latest/VoxConverse.SpeakerDiarization.voxconverse.test.rttm

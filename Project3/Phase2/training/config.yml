@@ -1,0 +1,18 @@
+pipeline:
+   name: pyannote.audio.pipeline.speaker_diarization.SpeakerDiarization
+   params:
+      sad_scores: ./finetune/sad/train/VoxConverse.SpeakerDiarization.voxconverse.train/validate_detection_fscore/VoxConverse.SpeakerDiarization.voxconverse.development/apply/0009
+      scd_scores: ./finetune/scd/train/VoxConverse.SpeakerDiarization.voxconverse.train/validate_segmentation_fscore/VoxConverse.SpeakerDiarization.voxconverse.development/apply/0008
+      embedding: ./finetune/emb
+      evaluation_only: True
+      method: affinity_propagation
+
+freeze:
+   speech_turn_segmentation:
+      speech_activity_detection:
+         min_duration_off: 0.6315121069334447
+         min_duration_on: 0.0007366523493967721
+         offset: 0.5727193137037349
+         onset: 0.5842225805454029
+         pad_offset: 0.0
+         pad_onset: 0.0

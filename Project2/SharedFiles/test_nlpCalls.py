@@ -12,6 +12,7 @@ sample_text = u'I am thinking about taking a short trip to Revere Beach, but I g
 
 def test_nlpCalls():
     (client, errors) = nlpCalls.init_google_nlp()
+    assert (client is not None)
     if client is None:
         helper.print_errors(errors)
         pytest.raises(SystemExit)
@@ -20,6 +21,7 @@ def test_nlpCalls():
     
     # The text to analyze
     (sentimentDict,errors) = nlpCalls.analyze_text_sentiment(client, sample_text)
+    assert (len(sentimentDict) != 0)
     if len(sentimentDict) == 0:
         helper.print_errors(errors)
         sys.exit(1)

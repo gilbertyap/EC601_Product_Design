@@ -1,0 +1,12 @@
+numpy
+scipy
+scikit-learn
+librosa
+webrtcvad
+google-api-python-client
+google-cloud-language
+google-cloud-storage
+tweepy
+pyqt5
+pyside2
+matplotlib

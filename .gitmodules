@@ -1,8 +1,8 @@
 [submodule "SharedResources/pyBK"]
-	url = git@github.com:josepatino/pyBK.git
+	url = https://github.com/josepatino/pyBK.git
 [submodule "SharedResources/pyannote-audio"]
 	path = SharedResources/pyannote-audio
-	url = git@github.com:pyannote/pyannote-audio.git
+	url = https://github.com/pyannote/pyannote-audio.git
 [submodule "SharedResources/dscore"]
 	path = SharedResources/dscore
-	url = git@github.com:nryant/dscore.git
+	url = https://github.com/nryant/dscore.git

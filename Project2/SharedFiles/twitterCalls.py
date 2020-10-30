@@ -172,6 +172,7 @@ Output - locationsList:dictionary, errors:list of string
 '''
 def getTrendingLocations(api):
     locationsList = None
+    errors = []
     try:
         locationsJsonObj = api.trends_available()
     except tweepy.TweepError as err:

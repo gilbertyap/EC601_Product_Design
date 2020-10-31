@@ -11,6 +11,8 @@
 
 ## Summary
 
+**NOTE THAT THE UPDATED TEST FILES WERE PLACED INTO THE PROJECT2 FOLDER OF THIS REPO**
+
 ### Phase 1
 
 The goal of Project 4 Phase 1 was become familiar with GitHub Actions and unit tests (for Python using `pytest`). GitHub Actions and unit tests are useful tools for making sure that code remains functional and as bug-free as possible throughout the development process. These tools help companies and groups stick to a "Continuous Integration" and "Continuous Deployment" or "Continuous Delivery" methodology set. These practices help developers and users alike.
@@ -25,7 +27,7 @@ During Project 2, I had developed a rudimentary unit test within `twitterCalls.p
 
 ### Phase 1
 
-Pushing a commit to the `project4` branch will trigger the GitHub action that runs `flake8`. To test the API wrapper libraries, users should clone this repository and add their API key and API secret key to the `/Project2/SharedResources/settings.ini` file and run `pytest`. 
+Pushing a commit to the `project4` branch will trigger the GitHub action that runs `flake8`. To test the API wrapper libraries, users should clone this repository and add their API key and API secret key to the `/Project2/SharedResources/settings.ini` file and run `pytest`.
 
 ## Issues
 

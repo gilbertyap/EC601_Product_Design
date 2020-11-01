@@ -34,7 +34,7 @@ Pushing a commit to the `project4` branch will trigger the GitHub action that ru
 ## Issues
 
 ### Phase 1
-* ~~Since it would not be advisable to push API keys to the GitHub repository, I have to run `pytest` on my folder offline. Additionally, ~~ Since Project 2 mainly relies on user input in the GUI, I am unable to add unit tests for that. I instead focused on offline API wrapper testing.
+* ~~Since it would not be advisable to push API keys to the GitHub repository, I have to run `pytest` on my folder offline. Additionally,~~ Since Project 2 mainly relies on user input in the GUI, I am unable to add unit tests for that. I instead focused on offline API wrapper testing.
 
 * After checking the logs of the GitHub Actions, I saw that my code received many warnings and "errors" from flake8, but all of them were mainly stylistic formatting issues. I have chosen to ignore them at this time.
 

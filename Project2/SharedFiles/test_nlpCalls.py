@@ -4,14 +4,14 @@
 # Author: Gilbert Yap (gilberty@bu.edu)
 # Date: October 29, 2020
 #---------------------------------------------
-
+from google.cloud import language_v1
 import helper, nlpCalls
-import pytest, sys
+import pytest, os, sys
 
 sample_text = u'I am thinking about taking a short trip to Revere Beach, but I get sunburn very easily. Maybe I should instead visit Castle Island with Gilbert. I heard that sunset there is really beautiful!'
 
 def test_nlpCalls():
-    (client, errors) = nlpCalls.init_google_nlp()
+    client = language_v1.LanguageServiceClient(credentials = os.getenv('GOOGLE_CLOUD_API_BASE64'))
     assert (client is not None)
     if client is None:
         helper.print_errors(errors)

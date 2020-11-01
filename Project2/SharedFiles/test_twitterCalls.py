@@ -5,16 +5,12 @@
 # Date: October 29, 2020
 #---------------------------------------------
 
-import configparser, helper, twitterCalls
-import pytest, sys
+import helper, twitterCalls
+import pytest, os, sys
 
 def test_twittercalls():
-    SETTINGS_FILE = 'settings.ini'
-    settings = configparser.ConfigParser()
-    settings.read(SETTINGS_FILE)
-    
     #Authorize API calls
-    (api, errors) = twitterCalls.init_auth(settings['KEYS']['api_key'], settings['KEYS']['api_secret_key'])
+    (api, errors) = twitterCalls.init_auth(os.getenv('API_KEY'), os.getenv('API_SECRET_KEY'))
     assert(api is not None)
     if api is None:
         helper.print_errors(errors)

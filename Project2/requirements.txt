@@ -1,7 +1,7 @@
-google-api-python-client
-google-cloud-language
-google-cloud-storage
-tweepy
-pyqt5
-pyside2
-matplotlib
+google-api-python-client<=1.12.5
+google-cloud-language<=2.0.0
+google-cloud-storage<=1.32.0
+tweepy<=3.9.0
+pyqt5<=5.15.1
+pyside2<=5.15.1
+matplotlib<=3.3.2
